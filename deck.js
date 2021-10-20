@@ -21,6 +21,9 @@ function getCards(amount) {
   ];
 
   let fullDeck = [];
+  const hand = [];
+  const firstHalf = [];
+  const secondHalf = [];
 
   for (let s = 0; s < suits.length; s++) {
     for (let v = 0; v < values.length; v++) {
@@ -29,11 +32,25 @@ function getCards(amount) {
     }
   }
 
-  if (amount == 1) {
-    return `${fullDeck[amount - 1].value} of ${fullDeck[amount - 1].suit}`;
-  }
+  switch (amount) {
+    case 1:
+      return `${fullDeck[0].value} of ${fullDeck[0].suit}`;
 
-  if (amount == 52) {
-    return fullDeck;
+    case 5:
+      for (let i = 0; i < 5; i++) {
+        let card = { suit: fullDeck[i].suit, value: fullDeck[i].value };
+        hand.push(card);
+      }
+      return hand;
+
+    case 'split':
+      for (let i = 0; i < 52; i++) {
+        let card = { suit: fullDeck[i].suit, value: fullDeck[i].value };
+        i % 2 ? firstHalf.push(card) : secondHalf.push(card);
+      }
+      return [firstHalf, secondHalf];
+
+    default:
+      return fullDeck;
   }
 }

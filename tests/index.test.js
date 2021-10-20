@@ -1,3 +1,4 @@
+const { getCards } = require('../deck');
 const deck = require('../deck');
 
 test('test setup working', () => {
@@ -19,3 +20,25 @@ test('gets all the cards', () => {
   expect(actual).toBe(expected);
 });
 
+test('get 5 random cards', () => {
+  const amount = 5;
+  const expected = 5;
+  const hand = deck.getCards(amount);
+  actual = hand.length;
+  expect(actual).toBe(expected);
+});
+
+test('no two cards are the same', () => {
+  // const firstHalf = deck.getCards('split 1');
+  // const secondHalf = deck.getCards('split 2');
+
+  const [firstHalf, secondHalf] = deck.getCards('split');
+  const deckChecker = (deck1, deck2) => {
+    return deck1.every((val, ind) => val === deck2[ind]);
+  };
+
+  expected = false;
+  actual = deckChecker(firstHalf, secondHalf);
+
+  expect(actual).toBe(expected);
+});
